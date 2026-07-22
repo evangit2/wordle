@@ -161,12 +161,12 @@ function submitGuess() {
   }
   
   // Check if word is valid (always allow the target word itself)
-  if (typeof VALID_WORDS !== 'undefined' && VALID_WORDS.length > 0) {
-    if (guess.toLowerCase() !== targetWord.toLowerCase() && !VALID_WORDS.includes(guess.toLowerCase())) {
-      showToast('Not in word list');
-      shakeRow();
-      return;
-    }
+  // Only block guesses that aren't all letters — don't block non-dictionary words
+  // since the admin can set custom words like HOKIE that aren't in the dictionary
+  if (!/^[A-Z]+$/.test(guess)) {
+    showToast('Not a valid word');
+    shakeRow();
+    return;
   }
   
   // Evaluate the guess
