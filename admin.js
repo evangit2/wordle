@@ -107,9 +107,10 @@ async function fetchWordsFile() {
   const s = getSettings();
   if (!s.token) throw new Error('No GitHub token configured. Go to Settings tab.');
   
-  const url = `https://api.github.com/repos/${s.owner}/${s.repo}/contents/${WORDS_FILE}?ref=${s.branch}`;
+  const url = `https://api.github.com/repos/${s.owner}/${s.repo}/contents/${WORDS_FILE}?ref=${s.branch}&t=${Date.now()}`;
   const resp = await fetch(url, {
-    headers: { 'Authorization': `token ${s.token}`, 'Accept': 'application/vnd.github.v3+json' }
+    headers: { 'Authorization': `token ${s.token}`, 'Accept': 'application/vnd.github.v3+json' },
+    cache: 'no-store'
   });
   
   if (resp.status === 404) {
@@ -278,7 +279,8 @@ async function saveToGitHub() {
       return;
     } catch (e) {
       if (e.message.includes('409') || e.message.includes('does not match') || e.message.includes('422')) {
-        // SHA stale, retry with fresh fetch
+        // SHA stale, wait a moment then retry with fresh fetch
+        await new Promise(r => setTimeout(r, 500));
         showAdminMessage(`Retrying... (${attempt + 2}/3)`, 'info');
         continue;
       }
