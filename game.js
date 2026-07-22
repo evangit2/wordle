@@ -34,7 +34,7 @@ function getToday() {
 // Load the word from words.json
 async function loadWord() {
   try {
-    const resp = await fetch(WORDS_URL + '?t=' + Date.now());
+    const resp = await fetch(WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
     const data = await resp.json();
     const words = data.words || [];
     
@@ -152,9 +152,9 @@ function submitGuess() {
     guess += document.getElementById(`tile-${currentRow}-${c}`).textContent;
   }
   
-  // Check if word is valid
+  // Check if word is valid (always allow the target word itself)
   if (typeof VALID_WORDS !== 'undefined' && VALID_WORDS.length > 0) {
-    if (!VALID_WORDS.includes(guess.toLowerCase())) {
+    if (guess.toLowerCase() !== targetWord.toLowerCase() && !VALID_WORDS.includes(guess.toLowerCase())) {
       showToast('Not in word list');
       shakeRow();
       return;
