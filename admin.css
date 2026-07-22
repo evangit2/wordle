@@ -169,7 +169,17 @@
   color: #fff;
 }
 
-.form-row input:focus, .qr-controls input:focus, .setting-row input:focus {
+.form-row select {
+  padding: 10px 8px;
+  font-size: 15px;
+  background: #3a3a3c;
+  border: 2px solid #565758;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.form-row input:focus, .qr-controls input:focus, .setting-row input:focus, .form-row select:focus {
   outline: none;
   border-color: #f5793a;
 }
@@ -221,6 +231,16 @@
 .word-item.today {
   border-color: #538d4e;
   background: #1a2a1c;
+}
+
+.length-badge {
+  font-size: 10px;
+  background: #565758;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .word-item input {

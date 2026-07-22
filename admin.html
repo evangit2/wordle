@@ -45,8 +45,16 @@
         <h2>📅 Add / Update Daily Word</h2>
         <p class="hint">Set a word for a specific date. If today has no word, the most recent past word is used.</p>
         <div class="form-row">
-          <input type="text" id="new-word" placeholder="5-letter word" maxlength="5" 
-             oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter') addWord()">
+          <input type="text" id="new-word" placeholder="Enter word" 
+             oninput="this.value=this.value.toUpperCase(); updateMaxLength()" onkeydown="if(event.key==='Enter') addWord()">
+          <select id="new-length">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
           <input type="date" id="new-date">
           <button onclick="addWord()">Add Word</button>
         </div>

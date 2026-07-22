@@ -1,6 +1,6 @@
 // Wordle Game Logic
 
-const WORD_LENGTH = 5;
+let WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
 const WORDS_URL = 'words.json';
 
@@ -10,9 +10,6 @@ let currentCol = 0;
 let guesses = [];
 let gameState = 'playing'; // playing, won, lost
 let letterStates = {}; // for keyboard coloring
-
-// SHA-256 hash for admin password
-const ADMIN_HASH = '97b00582a7ad43badef8096405fafb6729c21669faa2a20dd56c3cdb5b9f9c7f';
 
 // Initialize
 init();
@@ -40,6 +37,7 @@ async function loadWord() {
     
     if (words.length === 0) {
       targetWord = 'WORLD';
+      WORD_LENGTH = 5;
       return;
     }
     
@@ -47,18 +45,21 @@ async function loadWord() {
     const today = getToday();
     const todayEntry = words.find(w => w.date === today);
     
+    let entry;
     if (todayEntry) {
-      targetWord = todayEntry.word.toUpperCase();
+      entry = todayEntry;
     } else {
-      // Fall back to the most recent word (last in array)
-      // Sort by date descending and pick the most recent that's <= today
+      // Fall back to the most recent word
       const sorted = [...words].sort((a, b) => b.date.localeCompare(a.date));
-      const mostRecent = sorted.find(w => w.date <= today) || sorted[0];
-      targetWord = mostRecent.word.toUpperCase();
+      entry = sorted.find(w => w.date <= today) || sorted[0];
     }
+    
+    targetWord = entry.word.toUpperCase();
+    WORD_LENGTH = entry.length || entry.word.length || 5;
   } catch (e) {
     console.error('Failed to load word:', e);
     targetWord = 'WORLD';
+    WORD_LENGTH = 5;
   }
 }
 
@@ -66,10 +67,14 @@ async function loadWord() {
 function buildBoard() {
   const board = document.getElementById('board');
   board.innerHTML = '';
+  board.style.gridTemplateColumns = `repeat(${WORD_LENGTH}, 1fr)`;
+  board.style.aspectRatio = `${WORD_LENGTH} / ${MAX_GUESSES + 0.4}`;
+  
   for (let r = 0; r < MAX_GUESSES; r++) {
     const row = document.createElement('div');
     row.className = 'board-row';
     row.id = `row-${r}`;
+    row.style.gridTemplateColumns = `repeat(${WORD_LENGTH}, 1fr)`;
     for (let c = 0; c < WORD_LENGTH; c++) {
       const tile = document.createElement('div');
       tile.className = 'tile';
@@ -78,6 +83,12 @@ function buildBoard() {
     }
     board.appendChild(row);
   }
+  
+  // Adjust tile font size based on word length
+  let fontSize = 28;
+  if (WORD_LENGTH >= 7) fontSize = 22;
+  else if (WORD_LENGTH >= 6) fontSize = 25;
+  document.documentElement.style.setProperty('--tile-font', fontSize + 'px');
 }
 
 // Build the on-screen keyboard
@@ -311,12 +322,23 @@ function showStats() {
         </div>
       `).join('')}
     </div>
-    <div style="text-align:center; margin-top:20px;">
-      <button class="icon-btn" style="background:#538d4e; padding:12px 24px; border-radius:6px; font-size:16px;" onclick="closeModal('stats-modal')">Close</button>
+    <div style="text-align:center; margin-top:20px; display:flex; gap:8px; justify-content:center;">
+      <button class="icon-btn" style="background:#3a3a3c; padding:12px 24px; border-radius:6px; font-size:16px;" onclick="closeModal('stats-modal')">Close</button>
     </div>
   `;
   
   document.getElementById('stats-modal').classList.remove('hidden');
+}
+
+// Clear all data
+function clearData() {
+  // Remove stats
+  localStorage.removeItem('wordle-stats');
+  // Remove today's game state
+  localStorage.removeItem(`wordle-game-${getToday()}`);
+  // Show toast and reload
+  showToast('Data cleared! Refreshing...', 1500);
+  setTimeout(() => location.reload(), 1000);
 }
 
 // Save/restore game state (per day)
@@ -328,6 +350,7 @@ function saveGameState() {
     currentCol,
     gameState,
     targetWord,
+    wordLength: WORD_LENGTH,
     letterStates
   }));
 }
@@ -340,6 +363,7 @@ function loadGameState() {
   try {
     const state = JSON.parse(saved);
     if (state.targetWord !== targetWord) return; // word changed, fresh game
+    if (state.wordLength && state.wordLength !== WORD_LENGTH) return; // length changed, fresh game
     
     guesses = state.guesses || [];
     currentRow = state.currentRow || 0;
@@ -391,10 +415,19 @@ function attachListeners() {
     document.getElementById('help-modal').classList.remove('hidden');
   });
   
-  // Admin link
-  document.getElementById('admin-link').addEventListener('click', () => {
-    window.location.href = 'admin.html';
+  // Settings button
+  document.getElementById('settings-btn').addEventListener('click', () => {
+    document.getElementById('settings-modal').classList.remove('hidden');
   });
+  
+  // Admin link (inside settings modal)
+  const adminLink = document.getElementById('admin-link-modal');
+  if (adminLink) {
+    adminLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'admin.html';
+    });
+  }
   
   // Close modals on backdrop click
   document.querySelectorAll('.modal').forEach(modal => {

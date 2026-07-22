@@ -177,6 +177,15 @@ async function loadWords() {
   renderWordList();
 }
 
+// Update max length based on dropdown
+function updateMaxLength() {
+  const len = parseInt(document.getElementById('new-length').value);
+  const input = document.getElementById('new-word');
+  if (input.value.length > len) {
+    input.value = input.value.substring(0, len);
+  }
+}
+
 // Render the word list with editable fields
 function renderWordList() {
   const container = document.getElementById('word-list');
@@ -190,16 +199,19 @@ function renderWordList() {
   // Sort by date descending
   const sorted = [...currentWords].sort((a, b) => b.date.localeCompare(a.date));
   
-  container.innerHTML = sorted.map((entry, idx) => {
+  container.innerHTML = sorted.map((entry) => {
     const isToday = entry.date === today;
+    const idx = currentWords.indexOf(entry);
+    const len = entry.length || entry.word.length || 5;
     return `
-      <div class="word-item ${isToday ? 'today' : ''}" data-idx="${currentWords.indexOf(entry)}">
+      <div class="word-item ${isToday ? 'today' : ''}" data-idx="${idx}">
         <span class="date-label">${entry.date}</span>
+        <span class="length-badge">${len}L</span>
         ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
-        <input type="text" value="${entry.word}" maxlength="5" 
+        <input type="text" value="${entry.word}" maxlength="${len}" 
           oninput="this.value=this.value.toUpperCase()"
-          onchange="updateWord(${currentWords.indexOf(entry)}, this.value)">
-        <button class="delete-btn" onclick="deleteWord(${currentWords.indexOf(entry)})">🗑</button>
+          onchange="updateWord(${idx}, this.value)">
+        <button class="delete-btn" onclick="deleteWord(${idx})">🗑</button>
       </div>
     `;
   }).join('');
@@ -209,9 +221,10 @@ function renderWordList() {
 async function addWord() {
   const word = document.getElementById('new-word').value.trim().toUpperCase();
   const date = document.getElementById('new-date').value || getToday();
+  const length = parseInt(document.getElementById('new-length').value);
   
-  if (word.length !== 5 || !/[A-Z]{5}/.test(word)) {
-    showAdminMessage('Word must be exactly 5 letters', 'error');
+  if (word.length !== length || !/^[A-Z]+$/.test(word)) {
+    showAdminMessage(`Word must be exactly ${length} letters`, 'error');
     return;
   }
   
@@ -219,8 +232,9 @@ async function addWord() {
   const existingIdx = currentWords.findIndex(w => w.date === date);
   if (existingIdx !== -1) {
     currentWords[existingIdx].word = word;
+    currentWords[existingIdx].length = length;
   } else {
-    currentWords.push({ word, date });
+    currentWords.push({ word, date, length });
   }
   
   await saveToGitHub();
@@ -232,8 +246,10 @@ async function addWord() {
 // Quick add for today
 async function addWordForToday() {
   const word = document.getElementById('new-word').value.trim().toUpperCase();
-  if (word.length !== 5) {
-    showAdminMessage('Word must be exactly 5 letters', 'error');
+  const length = parseInt(document.getElementById('new-length').value);
+  
+  if (word.length !== length) {
+    showAdminMessage(`Word must be exactly ${length} letters`, 'error');
     return;
   }
   
@@ -243,8 +259,9 @@ async function addWordForToday() {
 
 // Update a word inline
 async function updateWord(idx, newWord) {
-  if (newWord.length !== 5) {
-    showAdminMessage('Word must be 5 letters', 'error');
+  const expectedLen = currentWords[idx].length || currentWords[idx].word.length || 5;
+  if (newWord.length !== expectedLen) {
+    showAdminMessage(`Word must be ${expectedLen} letters`, 'error');
     loadWords(); // reload to revert
     return;
   }
