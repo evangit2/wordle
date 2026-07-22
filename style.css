@@ -125,24 +125,27 @@ header h1 {
 
 /* Board */
 .board {
-  display: grid;
-  grid-template-rows: repeat(6, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 5px;
-  padding: 8px;
+  padding: 4px 8px;
   flex: 1;
   min-height: 0;
-  aspect-ratio: 1 / 1.2;
-  max-height: 420px;
+  width: 100%;
+  max-width: 360px;
   margin: 0 auto;
+  justify-content: center;
 }
 
 .board-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
   gap: 5px;
+  flex: 1;
+  min-height: 0;
 }
 
 .tile {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,6 +156,7 @@ header h1 {
   border-radius: 4px;
   aspect-ratio: 1 / 1;
   transition: transform 0.1s, border-color 0.15s;
+  max-height: 100%;
 }
 
 .tile.filled {

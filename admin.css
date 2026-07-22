@@ -261,6 +261,17 @@
   border-color: #f5793a;
 }
 
+.word-item select {
+  padding: 4px 4px;
+  font-size: 13px;
+  background: #3a3a3c;
+  border: 1px solid #565758;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 .word-item .date-label {
   font-size: 13px;
   color: #818384;

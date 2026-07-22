@@ -67,14 +67,11 @@ async function loadWord() {
 function buildBoard() {
   const board = document.getElementById('board');
   board.innerHTML = '';
-  board.style.gridTemplateColumns = `repeat(${WORD_LENGTH}, 1fr)`;
-  board.style.aspectRatio = `${WORD_LENGTH} / ${MAX_GUESSES + 0.4}`;
   
   for (let r = 0; r < MAX_GUESSES; r++) {
     const row = document.createElement('div');
     row.className = 'board-row';
     row.id = `row-${r}`;
-    row.style.gridTemplateColumns = `repeat(${WORD_LENGTH}, 1fr)`;
     for (let c = 0; c < WORD_LENGTH; c++) {
       const tile = document.createElement('div');
       tile.className = 'tile';

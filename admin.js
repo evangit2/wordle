@@ -206,11 +206,18 @@ function renderWordList() {
     return `
       <div class="word-item ${isToday ? 'today' : ''}" data-idx="${idx}">
         <span class="date-label">${entry.date}</span>
-        <span class="length-badge">${len}L</span>
         ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
         <input type="text" value="${entry.word}" maxlength="${len}" 
           oninput="this.value=this.value.toUpperCase()"
           onchange="updateWord(${idx}, this.value)">
+        <select onchange="updateLength(${idx}, this.value)">
+          <option value="3" ${len==3?'selected':''}>3</option>
+          <option value="4" ${len==4?'selected':''}>4</option>
+          <option value="5" ${len==5?'selected':''}>5</option>
+          <option value="6" ${len==6?'selected':''}>6</option>
+          <option value="7" ${len==7?'selected':''}>7</option>
+          <option value="8" ${len==8?'selected':''}>8</option>
+        </select>
         <button class="delete-btn" onclick="deleteWord(${idx})">🗑</button>
       </div>
     `;
@@ -267,6 +274,18 @@ async function updateWord(idx, newWord) {
   }
   currentWords[idx].word = newWord.toUpperCase();
   await saveToGitHub();
+}
+
+// Update word length inline
+async function updateLength(idx, newLength) {
+  const len = parseInt(newLength);
+  currentWords[idx].length = len;
+  // Truncate word if it's now too long
+  if (currentWords[idx].word.length > len) {
+    currentWords[idx].word = currentWords[idx].word.substring(0, len);
+  }
+  await saveToGitHub();
+  renderWordList();
 }
 
 // Delete a word
