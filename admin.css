@@ -124,7 +124,7 @@
   padding: 16px;
 }
 
-.tab-content.active {
+.tab-content.active:not(.hidden) {
   display: block;
 }
 

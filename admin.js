@@ -329,9 +329,14 @@ function downloadQR() {
 // Tab switching
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => {
+    t.classList.remove('active');
+    t.classList.add('hidden');
+  });
   document.querySelector(`.tab[data-tab="${tab}"]`).classList.add('active');
-  document.getElementById(`tab-${tab}`).classList.add('active');
+  const target = document.getElementById(`tab-${tab}`);
+  target.classList.add('active');
+  target.classList.remove('hidden');
 }
 
 // Show admin message (toast)
