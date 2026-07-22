@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#121213">
+  <title>Wordle Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+  <!-- Login screen -->
+  <div id="login-screen" class="admin-screen">
+    <div class="login-box">
+      <h1>🔐 Admin Login</h1>
+      <input type="password" id="admin-password" placeholder="Enter password" autocomplete="off"
+             onkeydown="if(event.key==='Enter') checkPassword()">
+      <button onclick="checkPassword()">Unlock</button>
+      <div id="login-error" class="error-msg hidden"></div>
+      <a href="index.html" class="back-link">← Back to game</a>
+    </div>
+  </div>
+
+  <!-- Admin panel -->
+  <div id="admin-panel" class="admin-screen hidden">
+    <header class="admin-header">
+      <a href="index.html" class="back-link">← Game</a>
+      <h1>Admin Panel</h1>
+      <button onclick="logout()" class="logout-btn">Logout</button>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="words" onclick="switchTab('words')">Words</button>
+      <button class="tab" data-tab="qr" onclick="switchTab('qr')">QR Code</button>
+      <button class="tab" data-tab="settings" onclick="switchTab('settings')">Settings</button>
+    </div>
+
+    <!-- Words tab -->
+    <div id="tab-words" class="tab-content active">
+      <div class="section">
+        <h2>📅 Add / Update Daily Word</h2>
+        <p class="hint">Set a word for a specific date. If today has no word, the most recent past word is used.</p>
+        <div class="form-row">
+          <input type="text" id="new-word" placeholder="5-letter word" maxlength="5" 
+             oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter') addWord()">
+          <input type="date" id="new-date">
+          <button onclick="addWord()">Add Word</button>
+        </div>
+        <button onclick="addWordForToday()" class="secondary-btn">Use for Today</button>
+      </div>
+
+      <div class="section">
+        <h2>📋 All Words</h2>
+        <p class="hint">Edit or delete any word. Changes are saved to GitHub.</p>
+        <div id="word-list" class="word-list"></div>
+      </div>
+    </div>
+
+    <!-- QR tab -->
+    <div id="tab-qr" class="tab-content hidden">
+      <div class="section">
+        <h2>📱 QR Code Generator</h2>
+        <p class="hint">Share the game link via QR code.</p>
+        <div class="qr-controls">
+          <input type="text" id="qr-url" placeholder="Site URL" onkeydown="if(event.key==='Enter') generateQR()">
+          <button onclick="generateQR()">Generate</button>
+        </div>
+        <div id="qr-display" class="qr-display"></div>
+        <button onclick="downloadQR()" id="qr-download" class="secondary-btn hidden">⬇ Download QR</button>
+      </div>
+    </div>
+
+    <!-- Settings tab -->
+    <div id="tab-settings" class="tab-content hidden">
+      <div class="section">
+        <h2>⚙ GitHub Settings</h2>
+        <p class="hint">Configure your GitHub repo to enable word updates.</p>
+        <div class="setting-row">
+          <label>Owner</label>
+          <input type="text" id="gh-owner" placeholder="evangit2">
+        </div>
+        <div class="setting-row">
+          <label>Repo</label>
+          <input type="text" id="gh-repo" placeholder="wordle">
+        </div>
+        <div class="setting-row">
+          <label>Branch</label>
+          <input type="text" id="gh-branch" placeholder="main">
+        </div>
+        <div class="setting-row">
+          <label>GitHub Token <span class="hint-inline">(needs repo scope)</span></label>
+          <input type="password" id="gh-token" placeholder="ghp_...">
+        </div>
+        <div class="setting-row">
+          <label>Pages URL</label>
+          <input type="text" id="pages-url" placeholder="https://evangit2.github.io/wordle/">
+        </div>
+        <button onclick="saveSettings()">Save Settings</button>
+        <div id="settings-saved" class="success-msg hidden">✓ Saved!</div>
+      </div>
+    </div>
+
+    <div id="admin-message" class="admin-message"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

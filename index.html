@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#121213">
+  <title>Wordle</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-left">
+        <button id="help-btn" class="icon-btn" aria-label="Help">?</button>
+      </div>
+      <h1>Wordle</h1>
+      <div class="header-right">
+        <button id="admin-link" class="icon-btn" aria-label="Admin">⚙</button>
+      </div>
+    </header>
+
+    <div id="message-container"></div>
+
+    <div id="board" class="board"></div>
+
+    <div id="keyboard" class="keyboard"></div>
+  </div>
+
+  <!-- Help modal -->
+  <div id="help-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>How to Play</h2>
+        <button class="close-btn" onclick="closeModal('help-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <p>Guess the <strong>Wordle</strong> in 6 tries.</p>
+        <ul>
+          <li>Each guess must be a valid 5-letter word.</li>
+          <li>The color of the tiles will change to show how close your guess was.</li>
+        </ul>
+        <div class="examples">
+          <div class="example">
+            <div class="example-row">
+              <div class="tile example-tile correct">W</div>
+              <div class="tile example-tile">O</div>
+              <div class="tile example-tile">R</div>
+              <div class="tile example-tile">D</div>
+              <div class="tile example-tile">S</div>
+            </div>
+            <p><strong>W</strong> is in the word and in the correct spot.</p>
+          </div>
+          <div class="example">
+            <div class="example-row">
+              <div class="tile example-tile">L</div>
+              <div class="tile example-tile present">I</div>
+              <div class="tile example-tile">G</div>
+              <div class="tile example-tile">H</div>
+              <div class="tile example-tile">T</div>
+            </div>
+            <p><strong>I</strong> is in the word but in the wrong spot.</p>
+          </div>
+          <div class="example">
+            <div class="example-row">
+              <div class="tile example-tile">R</div>
+              <div class="tile example-tile">O</div>
+              <div class="tile example-tile absent">G</div>
+              <div class="tile example-tile">U</div>
+              <div class="tile example-tile">E</div>
+            </div>
+            <p><strong>G</strong> is not in the word at all.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats modal -->
+  <div id="stats-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Statistics</h2>
+        <button class="close-btn" onclick="closeModal('stats-modal')">×</button>
+      </div>
+      <div class="modal-body" id="stats-body"></div>
+    </div>
+  </div>
+
+  <script src="words.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
