@@ -88,11 +88,14 @@ header h1 {
 
 /* Message */
 #message-container {
-  height: 0;
-  overflow: visible;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
-  z-index: 10;
+  z-index: 50;
+  pointer-events: none;
 }
 
 .toast {
@@ -104,10 +107,7 @@ header h1 {
   font-weight: 700;
   margin-top: 4px;
   animation: toastIn 0.2s ease, toastOut 0.2s ease 1.8s forwards;
-  white-space: nowrap;
   max-width: 90vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
