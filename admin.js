@@ -258,7 +258,7 @@ async function deleteWord(idx) {
   renderWordList();
 }
 
-// Save to GitHub
+// Save to GitHub (with retry on 409 conflict)
 async function saveToGitHub() {
   const s = getSettings();
   if (!s.token) {
@@ -268,16 +268,28 @@ async function saveToGitHub() {
   
   showAdminMessage('Saving to GitHub...', 'info');
   
-  try {
-    const { sha } = await fetchWordsFile();
-    const wordsData = { words: currentWords };
-    await updateWordsFile(wordsData, sha);
-    showAdminMessage('✓ Saved to GitHub!', 'success');
-  } catch (e) {
-    showAdminMessage(`Error: ${e.message}`, 'error');
-    // Reload from GitHub to stay in sync
-    await loadWords();
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      // Always fetch fresh SHA right before PUT
+      const { sha } = await fetchWordsFile();
+      const wordsData = { words: currentWords };
+      await updateWordsFile(wordsData, sha);
+      showAdminMessage('✓ Saved to GitHub!', 'success');
+      return;
+    } catch (e) {
+      if (e.message.includes('409') || e.message.includes('does not match') || e.message.includes('422')) {
+        // SHA stale, retry with fresh fetch
+        showAdminMessage(`Retrying... (${attempt + 2}/3)`, 'info');
+        continue;
+      }
+      showAdminMessage(`Error: ${e.message}`, 'error');
+      await loadWords();
+      return;
+    }
   }
+  
+  showAdminMessage('Error: Could not save after 3 attempts. Try again.', 'error');
+  await loadWords();
 }
 
 // QR Code generation

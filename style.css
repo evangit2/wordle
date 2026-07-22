@@ -98,13 +98,17 @@ header h1 {
 .toast {
   background: #fff;
   color: #000;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 10px 18px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 700;
-  margin-top: 8px;
+  margin-top: 4px;
   animation: toastIn 0.2s ease, toastOut 0.2s ease 1.8s forwards;
   white-space: nowrap;
+  max-width: 90vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 @keyframes toastIn {
