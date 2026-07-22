@@ -75,11 +75,11 @@ function getSettings() {
 
 function loadSettings() {
   const s = getSettings();
-  document.getElementById('gh-owner').value = s.owner || '';
-  document.getElementById('gh-repo').value = s.repo || '';
+  document.getElementById('gh-owner').value = s.owner || 'evangit2';
+  document.getElementById('gh-repo').value = s.repo || 'wordle';
   document.getElementById('gh-branch').value = s.branch || 'main';
   document.getElementById('gh-token').value = s.token || '';
-  document.getElementById('pages-url').value = s.pagesUrl || '';
+  document.getElementById('pages-url').value = s.pagesUrl || 'https://evangit2.github.io/wordle/';
 }
 
 function saveSettings() {
@@ -291,42 +291,28 @@ function generateQR() {
   const display = document.getElementById('qr-display');
   display.innerHTML = '';
   
-  // Generate QR code
-  const qr = qrcode(0, 'M');
-  qr.addData(url);
-  qr.make();
+  // Use qrcodejs (QRCode library)
+  new QRCode(display, {
+    text: url,
+    width: 256,
+    height: 256,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
   
-  // Create canvas
-  const canvas = document.createElement('canvas');
-  const cellSize = 6;
-  const margin = 4;
-  const count = qr.getModuleCount();
-  const size = (count + margin * 2) * cellSize;
-  
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  
-  // White background
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, size, size);
-  
-  // Draw modules
-  ctx.fillStyle = '#000';
-  for (let r = 0; r < count; r++) {
-    for (let c = 0; c < count; c++) {
-      if (qr.isDark(r, c)) {
-        ctx.fillRect((c + margin) * cellSize, (r + margin) * cellSize, cellSize, cellSize);
-      }
+  // Get the canvas/img for download
+  setTimeout(() => {
+    const canvas = display.querySelector('canvas');
+    const img = display.querySelector('img');
+    if (canvas) {
+      qrDataUrl = canvas.toDataURL('image/png');
+    } else if (img) {
+      qrDataUrl = img.src;
     }
-  }
+    document.getElementById('qr-download').classList.remove('hidden');
+  }, 100);
   
-  display.appendChild(canvas);
-  
-  // Store for download
-  qrDataUrl = canvas.toDataURL('image/png');
-  
-  document.getElementById('qr-download').classList.remove('hidden');
   showAdminMessage('QR code generated!', 'success');
 }
 
