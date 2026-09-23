@@ -511,3 +511,40 @@
   background: rgba(83, 141, 78, 0.25);
   outline-color: #538d4e;
 }
+
+/* ===== AI Bulk Generate ===== */
+.llm-prompt {
+  width: 100%;
+  box-sizing: border-box;
+  background: #1a1a1b;
+  color: #d7dadc;
+  border: 1px solid #3a3a3c;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+  margin: 10px 0;
+  white-space: pre-wrap;
+}
+
+.llm-json-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #1a1a1b;
+  color: #538d4e;
+  border: 1px dashed #565758;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+  margin: 10px 0;
+}
+
+#llm-import-status {
+  min-height: 18px;
+  font-weight: 600;
+}

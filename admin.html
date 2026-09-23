@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#121213">
   <title>Wordle Admin</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="admin.css?v=3">
+  <link rel="stylesheet" href="admin.css?v=4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
   <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 </head>
@@ -70,6 +70,19 @@
         <p class="hint">Edit or delete any word. Changes are saved to GitHub.</p>
         <div id="word-list" class="word-list"></div>
       </div>
+
+      <div class="section">
+        <h2>🤖 AI Bulk Generate (6 months)</h2>
+        <p class="hint">Copy the prompt below into your favorite chat LLM. It will return JSON words for the next 6 months — paste the JSON into the box below to import.</p>
+        <button onclick="copyLlmPrompt()" class="secondary-btn">📋 Copy LLM Prompt</button>
+        <textarea id="llm-prompt" class="llm-prompt" readonly rows="6"></textarea>
+        <textarea id="llm-json-input" class="llm-json-input" rows="6" placeholder='Paste the LLM JSON here: {"words": [...]}'></textarea>
+        <div class="form-row">
+          <button onclick="importLlmWords()">Import Words</button>
+          <button onclick="document.getElementById('llm-json-input').value=''" class="secondary-btn">Clear</button>
+        </div>
+        <p class="hint" id="llm-import-status"></p>
+      </div>
     </div>
 
     <!-- QR tab -->
@@ -119,6 +132,6 @@
     <div id="admin-message" class="admin-message"></div>
   </div>
 
-  <script src="admin.js?v=5"></script>
+  <script src="admin.js?v=6"></script>
 </body>
 </html>

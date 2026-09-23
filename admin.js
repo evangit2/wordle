@@ -40,6 +40,9 @@ async function showAdmin() {
   loadSettings();
   await loadWords();
   
+  // Fill the LLM prompt textarea
+  document.getElementById('llm-prompt').value = buildLlmPrompt();
+  
   // Auto-fill QR URL from settings
   const settings = getSettings();
   if (settings.pagesUrl) {
@@ -342,6 +345,141 @@ async function updateWord(idx, newWord) {
   await saveToGitHub();
 }
 
+// ===== AI Bulk Generate =====
+
+// Build the LLM prompt for generating 6 months of daily words
+function buildLlmPrompt() {
+  const today = getToday();
+  const end = new Date();
+  end.setDate(end.getDate() + 182);
+  const endStr = end.toISOString().slice(0, 10);
+  
+  return `You are generating daily puzzle words for a Virginia Tech safety-themed Wordle game.
+
+Generate one word per day, every day, from ${today} through ${endStr} (about 6 months).
+
+THEME — words must be oriented toward at least one of:
+- Virginia Tech (culture, campus, traditions, landmarks)
+- Virginia Tech public safety
+- Environmental Health & Safety (EHS) at Virginia Tech
+- Emergency management
+- Hokie Passport (Virginia Tech ID card office)
+- Virginia Tech Rescue Squad
+- Virginia Tech Police
+
+You may search the web for Virginia Tech terms, building names, EHS vocabulary, etc. to make the words authentic.
+
+RULES:
+- Each word must be 4 to 8 letters, A-Z only (no spaces, hyphens, or digits)
+- UPPERCASE every word
+- No duplicate words across the whole list
+- Mix themes day to day (don't do 10 EHS words in a row)
+- Words should be guessable and fun: real terms, acronyms count if well-known at VT (like HOKIE, CASHH, TORG)
+- Do NOT use offensive or sensitive terms
+
+OUTPUT — respond with ONLY a JSON code block, nothing else, in exactly this format:
+{
+  "words": [
+    { "word": "HOKIE", "date": "${today}", "length": 5 },
+    { "word": "SAFETY", "date": "<next day>", "length": 6 }
+  ]
+}
+
+Dates must be consecutive calendar days in YYYY-MM-DD format. Length must equal the word's letter count. No commentary before or after the JSON.`;
+}
+
+// Copy the prompt to clipboard
+function copyLlmPrompt() {
+  const ta = document.getElementById('llm-prompt');
+  ta.select();
+  ta.setSelectionRange(0, 99999);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  if (!ok && navigator.clipboard) {
+    navigator.clipboard.writeText(ta.value).then(() => {
+      showAdminMessage('Prompt copied to clipboard!', 'success');
+    }).catch(() => {
+      showAdminMessage('Copy failed — select the text manually', 'error');
+    });
+    return;
+  }
+  showAdminMessage(ok ? 'Prompt copied to clipboard!' : 'Copy failed — select the text manually', ok ? 'success' : 'error');
+}
+
+// Import words from pasted LLM JSON
+async function importLlmWords() {
+  const status = document.getElementById('llm-import-status');
+  const raw = document.getElementById('llm-json-input').value.trim();
+  
+  if (!raw) {
+    status.textContent = 'Paste the LLM JSON first.';
+    return;
+  }
+  
+  // Strip possible markdown fences
+  let text = raw.replace(/^```(json)?\s*/i, '').replace(/\s*```\s*$/, '');
+  
+  // Grab the first {...} block (LLMs sometimes add chatter around it)
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end === -1 || end <= start) {
+    status.textContent = '✗ No JSON object found in the pasted text.';
+    return;
+  }
+  text = text.substring(start, end + 1);
+  
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    status.textContent = '✗ Invalid JSON: ' + e.message;
+    return;
+  }
+  
+  const words = data.words || data;
+  if (!Array.isArray(words) || words.length === 0) {
+    status.textContent = '✗ No "words" array found.';
+    return;
+  }
+  
+  let added = 0, updated = 0, skipped = 0;
+  const seen = new Set();
+  
+  for (const entry of words) {
+    const word = String(entry.word || '').trim().toUpperCase();
+    const date = String(entry.date || '').trim();
+    const length = word.length;
+    
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { skipped++; continue; }
+    if (length < 3 || length > 8 || !/^[A-Z]+$/.test(word)) { skipped++; continue; }
+    
+    // Skip duplicates within the paste itself
+    const key = word + '|' + date;
+    if (seen.has(key)) { skipped++; continue; }
+    seen.add(key);
+    
+    const existingIdx = currentWords.findIndex(w => w.date === date);
+    if (existingIdx !== -1) {
+      currentWords[existingIdx].word = word;
+      currentWords[existingIdx].length = length;
+      updated++;
+    } else {
+      currentWords.push({ word, date, length });
+      added++;
+    }
+  }
+  
+  if (added + updated === 0) {
+    status.textContent = `✗ Nothing imported — ${skipped} entries skipped (bad format).`;
+    return;
+  }
+  
+  status.textContent = `Importing ${added} new + ${updated} updated words (${skipped} skipped)... saving to GitHub.`;
+  await saveToGitHub();
+  status.textContent = `✓ Imported ${added} new + ${updated} updated words (${skipped} skipped) — saved to GitHub!`;
+  document.getElementById('llm-json-input').value = '';
+  renderWordList();
+}
 // Delete a word
 async function deleteWord(idx) {
   currentWords.splice(idx, 1);
