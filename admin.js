@@ -178,6 +178,92 @@ async function loadWords() {
   renderWordList();
 }
 
+// Calendar state: month currently displayed (YYYY, M where M is 0-indexed)
+let calYear = parseInt(getToday().slice(0, 4));
+let calMonth = parseInt(getToday().slice(5, 7)) - 1;
+
+const CAL_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// Navigate months
+function calNav(delta) {
+  calMonth += delta;
+  if (calMonth < 0) { calMonth = 11; calYear -= 1; }
+  if (calMonth > 11) { calMonth = 0; calYear += 1; }
+  renderCalendar();
+}
+
+// Jump back to current month
+function calToday() {
+  const t = getToday();
+  calYear = parseInt(t.slice(0, 4));
+  calMonth = parseInt(t.slice(5, 7)) - 1;
+  renderCalendar();
+}
+
+// Date string for a cell
+function calDateStr(y, m, d) {
+  return `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
+// Render the mini calendar
+function renderCalendar() {
+  const container = document.getElementById('calendar');
+  const title = document.getElementById('cal-title');
+  if (!container) return;
+  
+  const today = getToday();
+  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  
+  title.textContent = `${CAL_MONTHS[calMonth]} ${calYear}`;
+  
+  const byDate = {};
+  currentWords.forEach(w => { byDate[w.date] = w; });
+  
+  let html = '<div class="cal-row cal-dow">';
+  ['S','M','T','W','T','F','S'].forEach(d => html += `<div class="cal-dow-cell">${d}</div>`);
+  html += '</div>';
+  
+  let day = 1 - firstDay;
+  while (day <= daysInMonth) {
+    html += '<div class="cal-row">';
+    for (let i = 0; i < 7; i++, day++) {
+      if (day < 1 || day > daysInMonth) {
+        html += '<div class="cal-cell cal-empty"></div>';
+      } else {
+        const ds = calDateStr(calYear, calMonth, day);
+        const entry = byDate[ds];
+        const classes = ['cal-cell'];
+        if (ds === today) classes.push('cal-today');
+        if (entry) classes.push('cal-scheduled');
+        html += `<div class="${classes.join(' ')}" onclick="calPick('${ds}')" title="${entry ? entry.word : ''}">
+          <span class="cal-day-num">${day}</span>
+          ${entry ? `<span class="cal-word">${entry.word}</span>` : ''}
+        </div>`;
+      }
+    }
+    html += '</div>';
+  }
+  
+  container.innerHTML = html;
+}
+
+// Tap a day: prefill the Add Word form with that date, focus the word input
+function calPick(dateStr) {
+  document.getElementById('new-date').value = dateStr;
+  const existing = currentWords.find(w => w.date === dateStr);
+  if (existing) {
+    document.getElementById('new-word').value = existing.word;
+    document.getElementById('new-length').value = existing.length || existing.word.length || 5;
+    showAdminMessage(`Editing ${dateStr} (current: ${existing.word}) — type a new word & tap Add`, 'info');
+  } else {
+    document.getElementById('new-word').value = '';
+    showAdminMessage(`Scheduling for ${dateStr} — enter a word & tap Add Word`, 'info');
+  }
+  document.getElementById('new-word').focus();
+  document.getElementById('new-word').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 // Update max length based on dropdown
 function updateMaxLength() {
   const len = parseInt(document.getElementById('new-length').value);
@@ -223,6 +309,7 @@ function renderWordList() {
       </div>
     `;
   }).join('');
+  renderCalendar();
 }
 
 // Add a new word

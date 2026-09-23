@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#121213">
   <title>Wordle Admin</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin.css?v=2">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
   <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 </head>
@@ -41,6 +41,18 @@
 
     <!-- Words tab -->
     <div id="tab-words" class="tab-content active">
+      <div class="section">
+        <h2>🗓 Schedule Calendar</h2>
+        <p class="hint">Tap any day to preset a word. Green = scheduled, highlighted ring = today.</p>
+        <div class="calendar-header">
+          <button class="cal-nav-btn" onclick="calNav(-1)" aria-label="Previous month">‹</button>
+          <h3 id="cal-title"></h3>
+          <button class="cal-nav-btn" onclick="calNav(1)" aria-label="Next month">›</button>
+        </div>
+        <div class="calendar" id="calendar"></div>
+        <button class="secondary-btn" onclick="calToday()">Jump to Today</button>
+      </div>
+
       <div class="section">
         <h2>📅 Add / Update Daily Word</h2>
         <p class="hint">Set a word for a specific date. If today has no word, the most recent past word is used.</p>
@@ -115,6 +127,6 @@
     <div id="admin-message" class="admin-message"></div>
   </div>
 
-  <script src="admin.js?v=2"></script>
+  <script src="admin.js?v=3"></script>
 </body>
 </html>

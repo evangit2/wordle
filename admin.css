@@ -394,3 +394,109 @@
   background: #538d4e;
   color: #fff;
 }
+
+/* ===== Schedule Calendar ===== */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.calendar-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cal-nav-btn {
+  background: #3a3a3c;
+  border: 1px solid #565758;
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  font-size: 20px;
+  line-height: 1;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cal-nav-btn:active {
+  background: #565758;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 8px;
+}
+
+.cal-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.cal-dow-cell {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #818384;
+  padding: 2px 0;
+}
+
+.cal-cell {
+  background: #1a1a1b;
+  border: 1px solid #3a3a3c;
+  border-radius: 6px;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 2px;
+  gap: 1px;
+}
+
+.cal-cell:active {
+  background: #3a3a3c;
+}
+
+.cal-cell.cal-empty {
+  background: transparent;
+  border-color: transparent;
+  cursor: default;
+}
+
+.cal-day-num {
+  font-size: 12px;
+  color: #d7dadc;
+  font-weight: 600;
+}
+
+.cal-word {
+  font-size: 9px;
+  font-weight: 700;
+  color: #538d4e;
+  letter-spacing: 0.5px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-cell.cal-scheduled {
+  border-color: #538d4e;
+  background: rgba(83, 141, 78, 0.12);
+}
+
+.cal-cell.cal-today {
+  outline: 2px solid #d7dadc;
+  outline-offset: -2px;
+}
+
+.cal-cell.cal-scheduled.cal-today {
+  outline-color: #538d4e;
+}
