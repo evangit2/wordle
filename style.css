@@ -18,6 +18,8 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  /* iOS: kill double-tap-to-zoom delay on all interactive elements */
+  touch-action: manipulation;
 }
 
 html, body {
@@ -486,4 +488,18 @@ header h1 {
 
 .admin-link-btn:active {
   opacity: 0.8;
+}
+
+/* ===== iOS zoom/click fixes ===== */
+
+/* Prevent double-tap zoom & 300ms delay on every tappable element */
+.key, .tile, button, .icon-btn, [onclick], input, textarea, select, .cal-cell {
+  touch-action: manipulation;
+}
+
+/* Block iOS pinch-zoom (belt & suspenders alongside the viewport meta —
+   older Safari versions ignore user-scalable=no). pan-x/pan-y keeps
+   normal scrolling working on the admin page */
+html, body {
+  touch-action: pan-x pan-y;
 }

@@ -159,7 +159,19 @@ function buildKeyboard() {
       btn.className = 'key' + (key.length > 1 ? ' wide' : '');
       btn.textContent = key === 'BACK' ? '⌫' : key;
       btn.setAttribute('data-key', key);
-      btn.addEventListener('click', () => handleKey(key));
+      // iOS: fire on touchstart for instant response — no 300ms click delay.
+      let lastTouch = 0;
+      btn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        lastTouch = Date.now();
+        handleKey(key);
+      }, { passive: false });
+      // Click handler: skip if a touchstart just handled it (prevents
+      // double-firing on browsers that still emit the synthetic click)
+      btn.addEventListener('click', () => {
+        if (Date.now() - lastTouch < 600) return;
+        handleKey(key);
+      });
       row.appendChild(btn);
     });
     keyboard.appendChild(row);
@@ -452,6 +464,19 @@ function closeModal(id) {
 
 // Event listeners
 function attachListeners() {
+  // iOS: block pinch-zoom gestures entirely (viewport meta + CSS are the
+  // first line of defense; this catches older Safari that ignores both)
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(evt => {
+    document.addEventListener(evt, (e) => e.preventDefault());
+  });
+  // iOS: block double-tap-to-zoom fallback on the rest of the page
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) e.preventDefault();
+    lastTouchEnd = now;
+  }, { passive: false });
+
   // Physical keyboard
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { handleKey('ENTER'); e.preventDefault(); }
