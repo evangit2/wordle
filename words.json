@@ -4,6 +4,921 @@
       "word": "HOKIE",
       "date": "2026-07-22",
       "length": 5
+    },
+    {
+      "word": "HOKIE",
+      "date": "2026-09-23",
+      "length": 5
+    },
+    {
+      "word": "SAFETY",
+      "date": "2026-09-24",
+      "length": 6
+    },
+    {
+      "word": "VTPD",
+      "date": "2026-09-25",
+      "length": 4
+    },
+    {
+      "word": "GLOVES",
+      "date": "2026-09-26",
+      "length": 6
+    },
+    {
+      "word": "ALERT",
+      "date": "2026-09-27",
+      "length": 5
+    },
+    {
+      "word": "VTRS",
+      "date": "2026-09-28",
+      "length": 4
+    },
+    {
+      "word": "PASSPORT",
+      "date": "2026-09-29",
+      "length": 8
+    },
+    {
+      "word": "BURRUSS",
+      "date": "2026-09-30",
+      "length": 7
+    },
+    {
+      "word": "HAZARD",
+      "date": "2026-10-01",
+      "length": 6
+    },
+    {
+      "word": "PATROL",
+      "date": "2026-10-02",
+      "length": 6
+    },
+    {
+      "word": "READY",
+      "date": "2026-10-03",
+      "length": 5
+    },
+    {
+      "word": "MEDIC",
+      "date": "2026-10-04",
+      "length": 5
+    },
+    {
+      "word": "SWIPE",
+      "date": "2026-10-05",
+      "length": 5
+    },
+    {
+      "word": "TORG",
+      "date": "2026-10-06",
+      "length": 4
+    },
+    {
+      "word": "GOGGLES",
+      "date": "2026-10-07",
+      "length": 7
+    },
+    {
+      "word": "SIREN",
+      "date": "2026-10-08",
+      "length": 5
+    },
+    {
+      "word": "OFFICER",
+      "date": "2026-10-09",
+      "length": 7
+    },
+    {
+      "word": "TRIAGE",
+      "date": "2026-10-10",
+      "length": 6
+    },
+    {
+      "word": "IDCARD",
+      "date": "2026-10-11",
+      "length": 6
+    },
+    {
+      "word": "PYLONS",
+      "date": "2026-10-12",
+      "length": 6
+    },
+    {
+      "word": "CHEMICAL",
+      "date": "2026-10-13",
+      "length": 8
+    },
+    {
+      "word": "SHELTER",
+      "date": "2026-10-14",
+      "length": 7
+    },
+    {
+      "word": "SECURE",
+      "date": "2026-10-15",
+      "length": 6
+    },
+    {
+      "word": "RESCUE",
+      "date": "2026-10-16",
+      "length": 6
+    },
+    {
+      "word": "ACCESS",
+      "date": "2026-10-17",
+      "length": 6
+    },
+    {
+      "word": "LANE",
+      "date": "2026-10-18",
+      "length": 4
+    },
+    {
+      "word": "FUMEHOOD",
+      "date": "2026-10-19",
+      "length": 8
+    },
+    {
+      "word": "WEATHER",
+      "date": "2026-10-20",
+      "length": 7
+    },
+    {
+      "word": "REPORT",
+      "date": "2026-10-21",
+      "length": 6
+    },
+    {
+      "word": "OXYGEN",
+      "date": "2026-10-22",
+      "length": 6
+    },
+    {
+      "word": "READER",
+      "date": "2026-10-23",
+      "length": 6
+    },
+    {
+      "word": "CASSELL",
+      "date": "2026-10-24",
+      "length": 7
+    },
+    {
+      "word": "LABCOAT",
+      "date": "2026-10-25",
+      "length": 7
+    },
+    {
+      "word": "EVACUATE",
+      "date": "2026-10-26",
+      "length": 8
+    },
+    {
+      "word": "ESCORT",
+      "date": "2026-10-27",
+      "length": 6
+    },
+    {
+      "word": "PATIENT",
+      "date": "2026-10-28",
+      "length": 7
+    },
+    {
+      "word": "PHOTOID",
+      "date": "2026-10-29",
+      "length": 7
+    },
+    {
+      "word": "SQUIRES",
+      "date": "2026-10-30",
+      "length": 7
+    },
+    {
+      "word": "EYEWASH",
+      "date": "2026-10-31",
+      "length": 7
+    },
+    {
+      "word": "TORNADO",
+      "date": "2026-11-01",
+      "length": 7
+    },
+    {
+      "word": "TRAFFIC",
+      "date": "2026-11-02",
+      "length": 7
+    },
+    {
+      "word": "SPLINT",
+      "date": "2026-11-03",
+      "length": 6
+    },
+    {
+      "word": "CARD",
+      "date": "2026-11-04",
+      "length": 4
+    },
+    {
+      "word": "SKIPPER",
+      "date": "2026-11-05",
+      "length": 7
+    },
+    {
+      "word": "LOCKOUT",
+      "date": "2026-11-06",
+      "length": 7
+    },
+    {
+      "word": "STORM",
+      "date": "2026-11-07",
+      "length": 5
+    },
+    {
+      "word": "DISPATCH",
+      "date": "2026-11-08",
+      "length": 8
+    },
+    {
+      "word": "VITALS",
+      "date": "2026-11-09",
+      "length": 6
+    },
+    {
+      "word": "BADGE",
+      "date": "2026-11-10",
+      "length": 5
+    },
+    {
+      "word": "MAROON",
+      "date": "2026-11-11",
+      "length": 6
+    },
+    {
+      "word": "TAGOUT",
+      "date": "2026-11-12",
+      "length": 6
+    },
+    {
+      "word": "FLOOD",
+      "date": "2026-11-13",
+      "length": 5
+    },
+    {
+      "word": "CROSSING",
+      "date": "2026-11-14",
+      "length": 8
+    },
+    {
+      "word": "BANDAGE",
+      "date": "2026-11-15",
+      "length": 7
+    },
+    {
+      "word": "ENTRY",
+      "date": "2026-11-16",
+      "length": 5
+    },
+    {
+      "word": "ORANGE",
+      "date": "2026-11-17",
+      "length": 6
+    },
+    {
+      "word": "HELMET",
+      "date": "2026-11-18",
+      "length": 6
+    },
+    {
+      "word": "WARNING",
+      "date": "2026-11-19",
+      "length": 7
+    },
+    {
+      "word": "RADIO",
+      "date": "2026-11-20",
+      "length": 5
+    },
+    {
+      "word": "STRETCH",
+      "date": "2026-11-21",
+      "length": 7
+    },
+    {
+      "word": "CODE",
+      "date": "2026-11-22",
+      "length": 4
+    },
+    {
+      "word": "GOBBLER",
+      "date": "2026-11-23",
+      "length": 7
+    },
+    {
+      "word": "SHIELD",
+      "date": "2026-11-24",
+      "length": 6
+    },
+    {
+      "word": "OUTAGE",
+      "date": "2026-11-25",
+      "length": 6
+    },
+    {
+      "word": "CAMPUS",
+      "date": "2026-11-26",
+      "length": 6
+    },
+    {
+      "word": "FIRSTAID",
+      "date": "2026-11-27",
+      "length": 8
+    },
+    {
+      "word": "ACCOUNT",
+      "date": "2026-11-28",
+      "length": 7
+    },
+    {
+      "word": "STONE",
+      "date": "2026-11-29",
+      "length": 5
+    },
+    {
+      "word": "LADDER",
+      "date": "2026-11-30",
+      "length": 6
+    },
+    {
+      "word": "THUNDER",
+      "date": "2026-12-01",
+      "length": 7
+    },
+    {
+      "word": "LIGHTS",
+      "date": "2026-12-02",
+      "length": 6
+    },
+    {
+      "word": "PULSE",
+      "date": "2026-12-03",
+      "length": 5
+    },
+    {
+      "word": "DINING",
+      "date": "2026-12-04",
+      "length": 6
+    },
+    {
+      "word": "CADETS",
+      "date": "2026-12-05",
+      "length": 6
+    },
+    {
+      "word": "HARNESS",
+      "date": "2026-12-06",
+      "length": 7
+    },
+    {
+      "word": "BACKUP",
+      "date": "2026-12-07",
+      "length": 6
+    },
+    {
+      "word": "POLICE",
+      "date": "2026-12-08",
+      "length": 6
+    },
+    {
+      "word": "CARE",
+      "date": "2026-12-09",
+      "length": 4
+    },
+    {
+      "word": "MOBILE",
+      "date": "2026-12-10",
+      "length": 6
+    },
+    {
+      "word": "QUARRY",
+      "date": "2026-12-11",
+      "length": 6
+    },
+    {
+      "word": "ERGONOMY",
+      "date": "2026-12-12",
+      "length": 8
+    },
+    {
+      "word": "SUPPLY",
+      "date": "2026-12-13",
+      "length": 6
+    },
+    {
+      "word": "ROUTE",
+      "date": "2026-12-14",
+      "length": 5
+    },
+    {
+      "word": "TRAUMA",
+      "date": "2026-12-15",
+      "length": 6
+    },
+    {
+      "word": "VERIFY",
+      "date": "2026-12-16",
+      "length": 6
+    },
+    {
+      "word": "NEWMAN",
+      "date": "2026-12-17",
+      "length": 6
+    },
+    {
+      "word": "HEARING",
+      "date": "2026-12-18",
+      "length": 7
+    },
+    {
+      "word": "WHISTLE",
+      "date": "2026-12-19",
+      "length": 7
+    },
+    {
+      "word": "LOCKS",
+      "date": "2026-12-20",
+      "length": 5
+    },
+    {
+      "word": "RESPONSE",
+      "date": "2026-12-21",
+      "length": 8
+    },
+    {
+      "word": "REPLACE",
+      "date": "2026-12-22",
+      "length": 7
+    },
+    {
+      "word": "GOODWIN",
+      "date": "2026-12-23",
+      "length": 7
+    },
+    {
+      "word": "CYLINDER",
+      "date": "2026-12-24",
+      "length": 8
+    },
+    {
+      "word": "BATTERY",
+      "date": "2026-12-25",
+      "length": 7
+    },
+    {
+      "word": "WATCH",
+      "date": "2026-12-26",
+      "length": 5
+    },
+    {
+      "word": "STATION",
+      "date": "2026-12-27",
+      "length": 7
+    },
+    {
+      "word": "RENEWAL",
+      "date": "2026-12-28",
+      "length": 7
+    },
+    {
+      "word": "DUCKPOND",
+      "date": "2026-12-29",
+      "length": 8
+    },
+    {
+      "word": "STORAGE",
+      "date": "2026-12-30",
+      "length": 7
+    },
+    {
+      "word": "WATER",
+      "date": "2026-12-31",
+      "length": 5
+    },
+    {
+      "word": "WALKWAY",
+      "date": "2027-01-01",
+      "length": 7
+    },
+    {
+      "word": "CRISIS",
+      "date": "2027-01-02",
+      "length": 6
+    },
+    {
+      "word": "HOKIES",
+      "date": "2027-01-03",
+      "length": 6
+    },
+    {
+      "word": "RANDOLPH",
+      "date": "2027-01-04",
+      "length": 8
+    },
+    {
+      "word": "BOOTS",
+      "date": "2027-01-05",
+      "length": 5
+    },
+    {
+      "word": "PREPARED",
+      "date": "2027-01-06",
+      "length": 8
+    },
+    {
+      "word": "BLUE",
+      "date": "2027-01-07",
+      "length": 4
+    },
+    {
+      "word": "LITTER",
+      "date": "2027-01-08",
+      "length": 6
+    },
+    {
+      "word": "LOGIN",
+      "date": "2027-01-09",
+      "length": 5
+    },
+    {
+      "word": "PAMPLIN",
+      "date": "2027-01-10",
+      "length": 7
+    },
+    {
+      "word": "APRON",
+      "date": "2027-01-11",
+      "length": 5
+    },
+    {
+      "word": "SNOW",
+      "date": "2027-01-12",
+      "length": 4
+    },
+    {
+      "word": "CAMERA",
+      "date": "2027-01-13",
+      "length": 6
+    },
+    {
+      "word": "WOUND",
+      "date": "2027-01-14",
+      "length": 5
+    },
+    {
+      "word": "PORTAL",
+      "date": "2027-01-15",
+      "length": 6
+    },
+    {
+      "word": "NORRIS",
+      "date": "2027-01-16",
+      "length": 6
+    },
+    {
+      "word": "MASK",
+      "date": "2027-01-17",
+      "length": 4
+    },
+    {
+      "word": "HEAT",
+      "date": "2027-01-18",
+      "length": 4
+    },
+    {
+      "word": "GUARD",
+      "date": "2027-01-19",
+      "length": 5
+    },
+    {
+      "word": "BREATH",
+      "date": "2027-01-20",
+      "length": 6
+    },
+    {
+      "word": "DIGITAL",
+      "date": "2027-01-21",
+      "length": 7
+    },
+    {
+      "word": "MCBRYDE",
+      "date": "2027-01-22",
+      "length": 7
+    },
+    {
+      "word": "DECON",
+      "date": "2027-01-23",
+      "length": 5
+    },
+    {
+      "word": "WIND",
+      "date": "2027-01-24",
+      "length": 4
+    },
+    {
+      "word": "SIGNAL",
+      "date": "2027-01-25",
+      "length": 6
+    },
+    {
+      "word": "SPINE",
+      "date": "2027-01-26",
+      "length": 5
+    },
+    {
+      "word": "VALID",
+      "date": "2027-01-27",
+      "length": 5
+    },
+    {
+      "word": "SAUNDERS",
+      "date": "2027-01-28",
+      "length": 8
+    },
+    {
+      "word": "HYGIENE",
+      "date": "2027-01-29",
+      "length": 7
+    },
+    {
+      "word": "COLD",
+      "date": "2027-01-30",
+      "length": 4
+    },
+    {
+      "word": "BEACON",
+      "date": "2027-01-31",
+      "length": 6
+    },
+    {
+      "word": "AIRWAY",
+      "date": "2027-02-01",
+      "length": 6
+    },
+    {
+      "word": "CHARGE",
+      "date": "2027-02-02",
+      "length": 6
+    },
+    {
+      "word": "HOLDEN",
+      "date": "2027-02-03",
+      "length": 6
+    },
+    {
+      "word": "SANITIZE",
+      "date": "2027-02-04",
+      "length": 8
+    },
+    {
+      "word": "PLAN",
+      "date": "2027-02-05",
+      "length": 4
+    },
+    {
+      "word": "SEARCH",
+      "date": "2027-02-06",
+      "length": 6
+    },
+    {
+      "word": "INJURY",
+      "date": "2027-02-07",
+      "length": 6
+    },
+    {
+      "word": "UPLOAD",
+      "date": "2027-02-08",
+      "length": 6
+    },
+    {
+      "word": "PATTON",
+      "date": "2027-02-09",
+      "length": 6
+    },
+    {
+      "word": "WASTE",
+      "date": "2027-02-10",
+      "length": 5
+    },
+    {
+      "word": "FLASH",
+      "date": "2027-02-11",
+      "length": 5
+    },
+    {
+      "word": "CALLBOX",
+      "date": "2027-02-12",
+      "length": 7
+    },
+    {
+      "word": "MOTION",
+      "date": "2027-02-13",
+      "length": 6
+    },
+    {
+      "word": "EXPIRE",
+      "date": "2027-02-14",
+      "length": 6
+    },
+    {
+      "word": "LAVERY",
+      "date": "2027-02-15",
+      "length": 6
+    },
+    {
+      "word": "LABEL",
+      "date": "2027-02-16",
+      "length": 5
+    },
+    {
+      "word": "KITBAG",
+      "date": "2027-02-17",
+      "length": 6
+    },
+    {
+      "word": "CCTV",
+      "date": "2027-02-18",
+      "length": 4
+    },
+    {
+      "word": "CPRTRAIN",
+      "date": "2027-02-19",
+      "length": 8
+    },
+    {
+      "word": "REISSUE",
+      "date": "2027-02-20",
+      "length": 7
+    },
+    {
+      "word": "VAWTER",
+      "date": "2027-02-21",
+      "length": 6
+    },
+    {
+      "word": "MOSS",
+      "date": "2027-02-22",
+      "length": 4
+    },
+    {
+      "word": "SLUSHER",
+      "date": "2027-02-23",
+      "length": 7
+    },
+    {
+      "word": "OWENS",
+      "date": "2027-02-24",
+      "length": 5
+    },
+    {
+      "word": "PAYNE",
+      "date": "2027-02-25",
+      "length": 5
+    },
+    {
+      "word": "DIETRICK",
+      "date": "2027-02-26",
+      "length": 8
+    },
+    {
+      "word": "CORPS",
+      "date": "2027-02-27",
+      "length": 5
+    },
+    {
+      "word": "PROSIM",
+      "date": "2027-02-28",
+      "length": 6
+    },
+    {
+      "word": "SERVICE",
+      "date": "2027-03-01",
+      "length": 7
+    },
+    {
+      "word": "LOYALTY",
+      "date": "2027-03-02",
+      "length": 7
+    },
+    {
+      "word": "HONOR",
+      "date": "2027-03-03",
+      "length": 5
+    },
+    {
+      "word": "DUTY",
+      "date": "2027-03-04",
+      "length": 4
+    },
+    {
+      "word": "SPIRIT",
+      "date": "2027-03-05",
+      "length": 6
+    },
+    {
+      "word": "SANDMAN",
+      "date": "2027-03-06",
+      "length": 7
+    },
+    {
+      "word": "KEYPLAY",
+      "date": "2027-03-07",
+      "length": 7
+    },
+    {
+      "word": "CENOTAPH",
+      "date": "2027-03-08",
+      "length": 8
+    },
+    {
+      "word": "CHAPEL",
+      "date": "2027-03-09",
+      "length": 6
+    },
+    {
+      "word": "ALUMNI",
+      "date": "2027-03-10",
+      "length": 6
+    },
+    {
+      "word": "NOISE",
+      "date": "2027-03-11",
+      "length": 5
+    },
+    {
+      "word": "VENT",
+      "date": "2027-03-12",
+      "length": 4
+    },
+    {
+      "word": "FILTER",
+      "date": "2027-03-13",
+      "length": 6
+    },
+    {
+      "word": "GROUND",
+      "date": "2027-03-14",
+      "length": 6
+    },
+    {
+      "word": "OUTLET",
+      "date": "2027-03-15",
+      "length": 6
+    },
+    {
+      "word": "CORDS",
+      "date": "2027-03-16",
+      "length": 5
+    },
+    {
+      "word": "SOCKET",
+      "date": "2027-03-17",
+      "length": 6
+    },
+    {
+      "word": "FIRE",
+      "date": "2027-03-18",
+      "length": 4
+    },
+    {
+      "word": "SMOKE",
+      "date": "2027-03-19",
+      "length": 5
+    },
+    {
+      "word": "NIMS",
+      "date": "2027-03-20",
+      "length": 4
+    },
+    {
+      "word": "FEMA",
+      "date": "2027-03-21",
+      "length": 4
+    },
+    {
+      "word": "COOP",
+      "date": "2027-03-22",
+      "length": 4
+    },
+    {
+      "word": "ACTION",
+      "date": "2027-03-23",
+      "length": 6
+    },
+    {
+      "word": "CRIME",
+      "date": "2027-03-24",
+      "length": 5
     }
   ]
 }
