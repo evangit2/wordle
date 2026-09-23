@@ -254,7 +254,6 @@ function calPick(dateStr) {
   const existing = currentWords.find(w => w.date === dateStr);
   if (existing) {
     document.getElementById('new-word').value = existing.word;
-    document.getElementById('new-length').value = existing.length || existing.word.length || 5;
     showAdminMessage(`Editing ${dateStr} (current: ${existing.word}) — type a new word & tap Add`, 'info');
   } else {
     document.getElementById('new-word').value = '';
@@ -262,15 +261,6 @@ function calPick(dateStr) {
   }
   document.getElementById('new-word').focus();
   document.getElementById('new-word').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-// Update max length based on dropdown
-function updateMaxLength() {
-  const len = parseInt(document.getElementById('new-length').value);
-  const input = document.getElementById('new-word');
-  if (input.value.length > len) {
-    input.value = input.value.substring(0, len);
-  }
 }
 
 // Render the word list with editable fields
@@ -289,22 +279,13 @@ function renderWordList() {
   container.innerHTML = sorted.map((entry) => {
     const isToday = entry.date === today;
     const idx = currentWords.indexOf(entry);
-    const len = entry.length || entry.word.length || 5;
     return `
       <div class="word-item ${isToday ? 'today' : ''}" data-idx="${idx}">
         <span class="date-label">${entry.date}</span>
         ${isToday ? '<span class="today-badge">TODAY</span>' : ''}
-        <input type="text" value="${entry.word}" maxlength="${len}" 
+        <input type="text" value="${entry.word}" 
           oninput="this.value=this.value.toUpperCase()"
           onchange="updateWord(${idx}, this.value)">
-        <select onchange="updateLength(${idx}, this.value)">
-          <option value="3" ${len==3?'selected':''}>3</option>
-          <option value="4" ${len==4?'selected':''}>4</option>
-          <option value="5" ${len==5?'selected':''}>5</option>
-          <option value="6" ${len==6?'selected':''}>6</option>
-          <option value="7" ${len==7?'selected':''}>7</option>
-          <option value="8" ${len==8?'selected':''}>8</option>
-        </select>
         <button class="delete-btn" onclick="deleteWord(${idx})">🗑</button>
       </div>
     `;
@@ -316,10 +297,10 @@ function renderWordList() {
 async function addWord() {
   const word = document.getElementById('new-word').value.trim().toUpperCase();
   const date = document.getElementById('new-date').value || getToday();
-  const length = parseInt(document.getElementById('new-length').value);
+  const length = word.length;
   
-  if (word.length !== length || !/^[A-Z]+$/.test(word)) {
-    showAdminMessage(`Word must be exactly ${length} letters`, 'error');
+  if (length < 3 || length > 8 || !/^[A-Z]+$/.test(word)) {
+    showAdminMessage('Word must be 3–8 letters (A–Z only)', 'error');
     return;
   }
   
@@ -340,40 +321,21 @@ async function addWord() {
 
 // Quick add for today
 async function addWordForToday() {
-  const word = document.getElementById('new-word').value.trim().toUpperCase();
-  const length = parseInt(document.getElementById('new-length').value);
-  
-  if (word.length !== length) {
-    showAdminMessage(`Word must be exactly ${length} letters`, 'error');
-    return;
-  }
-  
   document.getElementById('new-date').value = getToday();
   await addWord();
 }
 
 // Update a word inline
 async function updateWord(idx, newWord) {
-  const expectedLen = currentWords[idx].length || currentWords[idx].word.length || 5;
-  if (newWord.length !== expectedLen) {
-    showAdminMessage(`Word must be ${expectedLen} letters`, 'error');
+  newWord = newWord.trim().toUpperCase();
+  if (newWord.length < 3 || newWord.length > 8 || !/^[A-Z]+$/.test(newWord)) {
+    showAdminMessage('Word must be 3–8 letters (A–Z only)', 'error');
     loadWords(); // reload to revert
     return;
   }
-  currentWords[idx].word = newWord.toUpperCase();
+  currentWords[idx].word = newWord;
+  currentWords[idx].length = newWord.length;
   await saveToGitHub();
-}
-
-// Update word length inline
-async function updateLength(idx, newLength) {
-  const len = parseInt(newLength);
-  currentWords[idx].length = len;
-  // Truncate word if it's now too long
-  if (currentWords[idx].word.length > len) {
-    currentWords[idx].word = currentWords[idx].word.substring(0, len);
-  }
-  await saveToGitHub();
-  renderWordList();
 }
 
 // Delete a word
