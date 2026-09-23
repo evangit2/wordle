@@ -3,6 +3,7 @@
 let WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
 const WORDS_URL = 'words.json';
+const RAW_WORDS_URL = 'https://raw.githubusercontent.com/evangit2/wordle/main/words.json';
 
 let targetWord = '';
 let currentRow = 0;
@@ -30,10 +31,25 @@ function getToday() {
 
 // Load the word from words.json
 async function loadWord() {
+  let data = null;
+  
+  // Try raw.githubusercontent.com first — it reflects commits within ~seconds,
+  // while github.io can lag 30-60s behind on Pages rebuilds
   try {
-    const resp = await fetch(WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    const data = await resp.json();
-    const words = data.words || [];
+    const resp = await fetch(RAW_WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (resp.ok) data = await resp.json();
+  } catch (e) { /* fall through to Pages copy */ }
+  
+  // Fallback: the Pages-hosted copy
+  if (!data) {
+    try {
+      const resp = await fetch(WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+      if (resp.ok) data = await resp.json();
+    } catch (e) { /* use default below */ }
+  }
+  
+  try {
+    const words = (data && data.words) || [];
     
     if (words.length === 0) {
       targetWord = 'WORLD';
