@@ -103,6 +103,7 @@ function saveSettings() {
 }
 
 // GitHub API: get current words.json
+const WORDS_URL = 'words.json';
 async function fetchWordsFile() {
   const s = getSettings();
   if (!s.token) throw new Error('No GitHub token configured. Go to Settings tab.');
@@ -168,7 +169,7 @@ async function loadWords() {
   
   // Fallback: fetch words.json from the site
   try {
-    const resp = await fetch(WORDS_URL + '?t=' + Date.now());
+    const resp = await fetch(WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
     const data = await resp.json();
     currentWords = data.words || [];
   } catch {
