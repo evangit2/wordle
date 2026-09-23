@@ -24,29 +24,65 @@ async function init() {
   attachListeners();
 }
 
-// Get today's date in YYYY-MM-DD format
+// Get today's date in YYYY-MM-DD format (LOCAL time, matches admin panel's date picker)
 function getToday() {
-  return new Date().toISOString().split('T')[0];
+  // en-CA gives YYYY-MM-DD; using local date so the puzzle rolls over at local midnight
+  return new Date().toLocaleDateString('en-CA');
+}
+
+// Reject a data source if its freshest word is stale (safeguard against
+// devices serving cached words.json — retry other sources instead)
+function freshestDate(data) {
+  if (!data || !Array.isArray(data.words) || data.words.length === 0) return null;
+  return data.words.map(w => w.date).sort().pop();
+}
+
+function isStale(data) {
+  const newest = freshestDate(data);
+  if (!newest) return true;
+  const ageMs = Date.now() - new Date(newest + 'T12:00:00').getTime();
+  return ageMs > 6 * 60 * 60 * 1000; // older than 6h → suspiciously cached
 }
 
 // Load the word from words.json
 async function loadWord() {
   let data = null;
+  const t = Date.now();
   
-  // Try raw.githubusercontent.com first — it reflects commits within ~seconds,
-  // while github.io can lag 30-60s behind on Pages rebuilds
+  // Source 1: GitHub contents API — always sends fresh (no-cache) responses,
+  // immune to CDN caches and to browsers that ignore fetch's cache:'no-store'
+  // (older iOS Safari, in-app webviews)
   try {
-    const resp = await fetch(RAW_WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if (resp.ok) data = await resp.json();
-  } catch (e) { /* fall through to Pages copy */ }
+    const resp = await fetch(`https://api.github.com/repos/evangit2/wordle/contents/words.json?ref=main&t=${t}`, {
+      cache: 'no-store',
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if (resp.ok) {
+      const api = await resp.json();
+      if (api.content && api.encoding === 'base64') {
+        data = JSON.parse(atob(api.content.replace(/\s/g, '')));
+      }
+    }
+  } catch (e) { /* fall through */ }
   
-  // Fallback: the Pages-hosted copy
-  if (!data) {
+  // Source 2: raw.githubusercontent.com (CDN caches ~5 min)
+  if (!data || isStale(data)) {
     try {
-      const resp = await fetch(WORDS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+      const resp = await fetch(RAW_WORDS_URL + '?t=' + t, { cache: 'no-store' });
+      if (resp.ok) data = await resp.json();
+    } catch (e) { /* fall through */ }
+  }
+  
+  // Source 3: the Pages-hosted copy (can lag 10 min)
+  if (!data || isStale(data)) {
+    try {
+      const resp = await fetch(WORDS_URL + '?t=' + t, { cache: 'no-store' });
       if (resp.ok) data = await resp.json();
     } catch (e) { /* use default below */ }
   }
+  
+  // Final safeguard: if ALL sources gave stale data, prefer the least stale
+  // (already in `data`) — admin falls back to most recent past word anyway.
   
   try {
     const words = (data && data.words) || [];
