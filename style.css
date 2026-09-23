@@ -503,3 +503,43 @@ header h1 {
 html, body {
   touch-action: pan-x pan-y;
 }
+
+/* ===== Landscape lock (mobile) ===== */
+
+/* Phones in landscape get a "rotate your device" screen.
+   max-height targets phones (~375-430px tall in landscape) —
+   tablets/landscape desktops have taller viewports and are left alone. */
+#rotate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  color: var(--text);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 20px;
+}
+
+#rotate-overlay .rotate-icon {
+  font-size: 56px;
+  animation: rotateHint 2s ease-in-out infinite;
+}
+
+#rotate-overlay p {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+@keyframes rotateHint {
+  0%, 25% { transform: rotate(0deg); }
+  65%, 100% { transform: rotate(90deg); }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  #rotate-overlay { display: flex; }
+}

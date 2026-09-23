@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#121213">
   <title>Wordle</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
 </head>
 <body>
@@ -117,5 +117,19 @@
 
   <script src="words.js?v=5"></script>
   <script src="game.js?v=9"></script>
+
+  <!-- Landscape lock for phones -->
+  <div id="rotate-overlay">
+    <div class="rotate-icon">📱</div>
+    <p>Rotate your device<br>to portrait</p>
+  </div>
+  <script>
+    // Try to hard-lock portrait where the browser allows it (Android Chrome,
+    // home-screen webapps). iOS Safari doesn't support locking — the CSS
+    // overlay above covers it there.
+    if (window.screen && screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock('portrait').catch(() => {});
+    }
+  </script>
 </body>
 </html>
