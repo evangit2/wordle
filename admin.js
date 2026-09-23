@@ -277,6 +277,7 @@ function renderWordList() {
   
   if (currentWords.length === 0) {
     container.innerHTML = '<p class="hint">No words yet. Add one above.</p>';
+    renderCalendar();
     return;
   }
   
@@ -483,6 +484,22 @@ async function importLlmWords() {
 // Delete a word
 async function deleteWord(idx) {
   currentWords.splice(idx, 1);
+  await saveToGitHub();
+  renderWordList();
+}
+
+// Delete ALL words (double confirm — wipes words.json)
+async function deleteAllWords() {
+  if (currentWords.length === 0) {
+    showAdminMessage('No words to delete.', 'info');
+    return;
+  }
+  if (!confirm(`Delete ALL ${currentWords.length} words? This wipes words.json on GitHub.`)) return;
+  if (prompt('Type DELETE to confirm wiping all words:') !== 'DELETE') {
+    showAdminMessage('Delete-all cancelled.', 'info');
+    return;
+  }
+  currentWords = [];
   await saveToGitHub();
   renderWordList();
 }
