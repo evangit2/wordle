@@ -181,6 +181,7 @@ async function loadWords() {
 // Calendar state: month currently displayed (YYYY, M where M is 0-indexed)
 let calYear = parseInt(getToday().slice(0, 4));
 let calMonth = parseInt(getToday().slice(5, 7)) - 1;
+let calSelected = null; // date string of the tapped day
 
 const CAL_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -235,6 +236,7 @@ function renderCalendar() {
         const entry = byDate[ds];
         const classes = ['cal-cell'];
         if (ds === today) classes.push('cal-today');
+        if (ds === calSelected) classes.push('cal-selected');
         if (entry) classes.push('cal-scheduled');
         html += `<div class="${classes.join(' ')}" onclick="calPick('${ds}')" title="${entry ? entry.word : ''}">
           <span class="cal-day-num">${day}</span>
@@ -250,6 +252,8 @@ function renderCalendar() {
 
 // Tap a day: prefill the Add Word form with that date, focus the word input
 function calPick(dateStr) {
+  calSelected = dateStr;
+  renderCalendar();
   document.getElementById('new-date').value = dateStr;
   const existing = currentWords.find(w => w.date === dateStr);
   if (existing) {

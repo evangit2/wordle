@@ -500,3 +500,14 @@
 .cal-cell.cal-scheduled.cal-today {
   outline-color: #538d4e;
 }
+
+.cal-cell.cal-selected {
+  background: #3a3a3c;
+  outline: 2px solid #d7dadc;
+  outline-offset: -2px;
+}
+
+.cal-cell.cal-scheduled.cal-selected {
+  background: rgba(83, 141, 78, 0.25);
+  outline-color: #538d4e;
+}
